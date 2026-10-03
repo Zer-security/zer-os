@@ -1,0 +1,115 @@
+#!/bin/bash
+set -euo pipefail
+
+PROFILE="${1:-}"
+
+NFT="/usr/sbin/nft"
+TOR_UID="$(id -u debian-tor 2>/dev/null || echo 0)"
+RULESET="/run/zer-network-profile.nft"
+
+usage() {
+    echo "Usage: $0 {normal|tor|restricted|status}"
+    exit 2
+}
+
+case "$PROFILE" in
+normal)
+cat > "$RULESET" <<NFT
+flush ruleset
+
+table inet zer_filter {
+    chain input {
+        type filter hook input priority filter; policy drop;
+        iifname "lo" accept
+        ct state established,related accept
+        ip protocol icmp accept
+        ip6 nexthdr ipv6-icmp accept
+    }
+
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+    }
+
+    chain output {
+        type filter hook output priority filter; policy accept;
+    }
+}
+NFT
+;;
+
+tor)
+cat > "$RULESET" <<NFT
+flush ruleset
+
+table inet zer_filter {
+    chain input {
+        type filter hook input priority filter; policy drop;
+        iifname "lo" accept
+        ct state established,related accept
+        ip protocol icmp accept
+        ip6 nexthdr ipv6-icmp accept
+    }
+
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+    }
+
+    chain output {
+        type filter hook output priority filter; policy accept;
+
+        oifname "lo" accept
+        meta skuid $TOR_UID accept
+        ct state established,related accept
+
+        tcp redirect to :9040
+        udp dport 53 redirect to :9053
+    }
+}
+NFT
+;;
+
+restricted)
+cat > "$RULESET" <<'NFT'
+flush ruleset
+
+table inet zer_filter {
+    chain input {
+        type filter hook input priority filter; policy drop;
+        iifname "lo" accept
+        ct state established,related accept
+        ip protocol icmp accept
+        ip6 nexthdr ipv6-icmp accept
+    }
+
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+    }
+
+    chain output {
+        type filter hook output priority filter; policy drop;
+        oifname "lo" accept
+        ct state established,related accept
+    }
+}
+NFT
+;;
+
+status)
+"$NFT" list table inet zer_filter 2>/dev/null || {
+    echo "Profile: unknown"
+    exit 1
+}
+exit 0
+;;
+
+*)
+usage
+;;
+esac
+
+"$NFT" -c -f "$RULESET"
+"$NFT" -f "$RULESET"
+
+rm -f "$RULESET"
+
+echo "Network profile: $PROFILE"
