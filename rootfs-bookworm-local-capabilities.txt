@@ -1,0 +1,1 @@
+/home/zerkoth/zeros/rootfs-bookworm-local/usr/bin/ping cap_net_raw=ep

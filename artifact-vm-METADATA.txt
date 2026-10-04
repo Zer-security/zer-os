@@ -1,0 +1,6 @@
+kernel_commit=1b357ecb321392158d507b04672ffee57bfa071d
+kernel_version=6.18.54
+rootfs=Debian 12 Bookworm
+filesystem=ext4
+image_size=2147483648
+image_uuid=e98e67e5-3fa5-4961-9016-b545aefcf52b

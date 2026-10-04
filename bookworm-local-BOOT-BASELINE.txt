@@ -1,0 +1,5 @@
+kernel=6.18.54
+rootfs=Debian 12 Bookworm
+filesystem=ext4
+image_uuid=e342294a-44bc-4e99-b331-9ae4b022ea5a
+image_sha256=aeaecdcfe74e4481c6d17cbd5b98df5a9859b21236e54a1b4c1ac7fcf22f02be

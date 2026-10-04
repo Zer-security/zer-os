@@ -1,0 +1,41 @@
+ZER OS WORKSPACE AUDIT BASELINE
+2026-10-03T00:26:12+07:00
+--- PACKAGE COUNT ---
+165
+--- ACCOUNT FILES ---
+644 root:root /home/zerkoth/zeros/rootfs-workspace/etc/passwd
+640 root:shadow /home/zerkoth/zeros/rootfs-workspace/etc/shadow
+644 root:root /home/zerkoth/zeros/rootfs-workspace/etc/group
+640 root:shadow /home/zerkoth/zeros/rootfs-workspace/etc/gshadow
+--- SUID/SGID ---
+2755 root:netdev /home/zerkoth/zeros/rootfs-workspace/usr/bin/crontab
+2755 root:shadow /home/zerkoth/zeros/rootfs-workspace/usr/bin/chage
+2755 root:shadow /home/zerkoth/zeros/rootfs-workspace/usr/bin/expiry
+2755 root:shadow /home/zerkoth/zeros/rootfs-workspace/usr/sbin/unix_chkpwd
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/chfn
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/chsh
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/gpasswd
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/mount
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/newgrp
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/passwd
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/su
+4755 root:root /home/zerkoth/zeros/rootfs-workspace/usr/bin/umount
+--- WORLD-WRITABLE ---
+--- CAPABILITIES ---
+/usr/bin/ping cap_net_raw=ep
+--- NFTABLES CONFIG ---
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table inet filter {
+	chain input {
+		type filter hook input priority filter;
+	}
+	chain forward {
+		type filter hook forward priority filter;
+	}
+	chain output {
+		type filter hook output priority filter;
+	}
+}

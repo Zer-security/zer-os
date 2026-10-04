@@ -1,0 +1,10 @@
+Zer OS VM BUILD BASELINE
+2026-10-02T23:19:11+07:00
+kernel_commit=1b357ecb321392158d507b04672ffee57bfa071d
+kernel_version=6.18.54
+rootfs=Debian 12 Bookworm
+systemd=252.39-1~deb12u2
+image_uuid=e98e67e5-3fa5-4961-9016-b545aefcf52b
+0ae71b16fb77650e5c088755c1f301973bf275a183aaf638e6362ac1e6eecc11  kernel/arch/x86/boot/bzImage
+919df4aaaa24cdc38a3c0f7bc6b6265c956a193de9d184970bdd25c3c1bcf57b  rootfs/boot/initrd.img-6.18.54
+b1624d9dc08cafd8e029513b03dec6c9c743f70eafbbcb1cdda9b176931d3de0  test-rootfs.img

@@ -1,0 +1,6 @@
+kernel=6.18.54
+kernel_sha256=0ae71b16fb77650e5c088755c1f301973bf275a183aaf638e6362ac1e6eecc11
+initramfs_sha256=b43aaa1bc423137358f45897fdd3d3834093e2fa85ff4c9d629ffb0c4ff4a77e
+rootfs_image_sha256=aeaecdcfe74e4481c6d17cbd5b98df5a9859b21236e54a1b4c1ac7fcf22f02be
+rootfs=Debian 12 Bookworm
+filesystem=ext4
